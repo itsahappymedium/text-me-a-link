@@ -10,3 +10,12 @@ Text Domain: text-me-a-link
 Domain Path: /languages
 */
 
+if ( ! class_exists( 'TMaL' ) ) :
+
+class TMaL {
+    function __construct() {
+
+    }
+}
+
+endif;
