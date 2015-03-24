@@ -27,6 +27,10 @@ class TMaL {
             'dir'           => trailingslashit( plugin_dir_path( __FILE__ ) ),
             'url'           => trailingslashit( plugin_dir_url( __FILE__ ) ),
         );
+
+        if ( is_admin() ) {
+            include( 'admin/class-tmal-admin.php' );
+        }
     }
 }
 
