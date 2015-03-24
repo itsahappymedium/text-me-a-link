@@ -5,22 +5,12 @@ if ( ! class_exists('TMaL_Admin') ) :
 class TMaL_Admin {
 
     /**
-     * Settings (will be overriden by parent)
-     * @var array
-     */
-    var $settings;
-
-    /**
      * Options to store the options page variables
      * @var array
      */
     private $options;
 
     public function __construct() {
-        if ( function_exists('tmal') ) {
-            $this->settings = tmal()->settings;
-        }
-
         add_action( 'admin_menu', array( $this, 'add_plugin_menu' ) );
         add_action( 'admin_init', array( $this, 'page_init' ) );
     }

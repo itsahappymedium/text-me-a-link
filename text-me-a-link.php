@@ -20,13 +20,21 @@ class TMaL {
      */
     var $settings;
 
-    function __construct() {
+    /**
+     * Settings from the options page
+     * @var array
+     */
+    private $options;
+
+    public function __construct() {
         $this->settings = array(
             'version'       => '0.1-alpha',
             'name'          => __( 'Text Me a Link', 'tmal' ),
             'dir'           => trailingslashit( plugin_dir_path( __FILE__ ) ),
             'url'           => trailingslashit( plugin_dir_url( __FILE__ ) ),
         );
+
+        $this->options = get_option( 'tmal-settings' );
 
         if ( is_admin() ) {
             include( 'admin/class-tmal-admin.php' );
