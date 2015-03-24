@@ -67,9 +67,17 @@ class TMaL_Admin {
         );
 
         add_settings_field(
-            'api_key',
-            'Twilio API Key',
-            array( $this, 'api_key_callback' ),
+            'account_sid',
+            'Twilio Account SID',
+            array( $this, 'account_sid_callback' ),
+            'tmal-admin',
+            'tmal-twilio-settings'
+        );
+
+        add_settings_field(
+            'auth_key',
+            'Twilio Auth Key',
+            array( $this, 'auth_key_callback' ),
             'tmal-admin',
             'tmal-twilio-settings'
         );
@@ -83,8 +91,12 @@ class TMaL_Admin {
     public function sanitize( $input ) {
         $new_input = array();
 
-        if ( isset( $input['api_key'] ) ) {
-            $new_input['api_key'] = $input['api_key'];
+        if ( isset( $input['account_sid'] ) ) {
+            $new_input['account_sid'] = $input['account_sid'];
+        }
+
+        if ( isset( $input['auth_key'] ) ) {
+            $new_input['auth_key'] = $input['auth_key'];
         }
 
         return $new_input;
@@ -99,13 +111,24 @@ class TMaL_Admin {
     }
 
     /**
-     * Print out the API key input
+     * Print out the Account SID input
      * @return void
      */
-    public function api_key_callback() {
+    public function account_sid_callback() {
         printf(
-            '<input type="text" id="api_key" name="tmal-settings[api_key]" value="%s" />',
-            isset( $this->options['api_key'] ) ? esc_attr( $this->options['api_key'] ) : ''
+            '<input type="text" id="account_sid" name="tmal-settings[account_sid]" value="%s" />',
+            isset( $this->options['account_sid'] ) ? esc_attr( $this->options['account_sid'] ) : ''
+        );
+    }
+
+    /**
+     * Print out the auth key input
+     * @return void
+     */
+    public function auth_key_callback() {
+        printf(
+            '<input type="text" id="auth_key" name="tmal-settings[auth_key]" value="%s" />',
+            isset( $this->options['auth_key'] ) ? esc_attr( $this->options['auth_key'] ) : ''
         );
     }
 }
