@@ -15,16 +15,16 @@ namespace TMaL;
 class TMaL {
 
     /**
-     * Plugin settings
-     * @var array
-     */
-    var $settings;
-
-    /**
      * Settings from the options page
      * @var array
      */
     private $options;
+
+    /**
+     * Plugin settings
+     * @var array
+     */
+    private $settings;
 
     public function __construct() {
         $this->settings = array(
@@ -37,9 +37,20 @@ class TMaL {
         $this->options = get_option( 'tmal-settings' );
 
         if ( is_admin() ) {
-            include( 'admin/class-tmal-admin.php' );
+            require_once 'admin/class-tmal-admin.php';
             new Admin( $this->settings );
         }
+
+        $this->load_includes();
+    }
+
+    /**
+     * Load the necessary include files
+     * @return void
+     */
+    private function load_includes() {
+        require_once 'includes/class-tmal-twilio.php';
+        $twilio = new Twilio( $this->options, $this->settings );
     }
 }
 

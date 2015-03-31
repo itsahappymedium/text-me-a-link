@@ -94,6 +94,14 @@ class Admin {
             'tmal-admin',
             'tmal-twilio-settings'
         );
+
+        add_settings_field(
+            'phone_number',
+            'Twilio Phone Number',
+            array( $this, 'phone_number_callback' ),
+            'tmal-admin',
+            'tmal-twilio-settings'
+        );
     }
 
     /**
@@ -110,6 +118,10 @@ class Admin {
 
         if ( isset( $input['auth_key'] ) ) {
             $new_input['auth_key'] = $input['auth_key'];
+        }
+
+        if ( isset( $input['phone_number'] ) ) {
+            $new_input['phone_number'] = $input['phone_number'];
         }
 
         return $new_input;
@@ -142,6 +154,17 @@ class Admin {
         printf(
             '<input type="text" id="auth_key" name="tmal-settings[auth_key]" value="%s" class="tmal-key-input" />',
             isset( $this->options['auth_key'] ) ? esc_attr( $this->options['auth_key'] ) : ''
+        );
+    }
+
+    /**
+     * Print out the input for the phone number
+     * @return void
+     */
+    public function phone_number_callback() {
+        printf(
+            '<input type="text" id="phone_number" name="tmal-settings[phone_number]" value="%s" class="tmal-key-input" />',
+            isset( $this->options['phone_number'] ) ? esc_attr( $this->options['phone_number'] ) : ''
         );
     }
 }
