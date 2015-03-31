@@ -10,7 +10,7 @@ Text Domain: tmal
 Domain Path: /languages
 */
 
-if ( ! class_exists( 'TMaL' ) ) :
+namespace TMaL;
 
 class TMaL {
 
@@ -54,5 +54,3 @@ function tmal() {
 
 // Initialize
 tmal();
-
-endif;

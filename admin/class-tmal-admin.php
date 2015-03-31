@@ -1,8 +1,8 @@
 <?php
 
-if ( ! class_exists('TMaL_Admin') ) :
+namespace TMaL;
 
-class TMaL_Admin {
+class Admin {
 
     /**
      * Options to store the options page variables
@@ -133,6 +133,4 @@ class TMaL_Admin {
     }
 }
 
-new TMaL_Admin();
-
-endif;
+new Admin();
