@@ -49,9 +49,8 @@ class TMaL {
      * @return void
      */
     private function load_includes() {
+        // Include various utility classes
         require_once 'includes/class-tmal-twilio.php';
-        $twilio = new Twilio( $this->options, $this->settings );
-
         require_once 'includes/class-tmal-phone-number.php';
     }
 }

@@ -24,18 +24,19 @@ class Twilio {
      */
     private $settings;
 
-    public function __construct( $options, $settings ) {
-        $this->options = $options;
-        $this->settings = $settings;
+    public function __construct() {
+    }
+
+    private function init() {
+        $this->options = tmal()->options;
+        $this->settings = tmal()->settings;
 
         // Include the proper library
         require_once $this->settings['dir'] . 'vendor/autoload.php';
 
         // Set up the Twilio client
         $this->_setup_twilio_client();
-    }
 
-    private function _setup_twilio_client() {
         if ( ! $this->is_ready_to_send() ) {
             throw new Exception("You must enter the proper credentials on the Text Me a Link settings page.");
         }
@@ -66,7 +67,7 @@ class Twilio {
      * @param  string $message Message
      * @return string          The SID of the message
      */
-    public function send_message( $number, $message ) {
+    private function send_message( $number, $message ) {
         $message = $this->client->account->messages->sendMessage(
             $this->options['phone_number'],
             $number,
@@ -74,5 +75,21 @@ class Twilio {
         );
 
         return $message->sid;
+    }
+
+    public function send_verification_code( $number ) {
+        $phone = new Phone_Number( $number );
+
+        if ( $phone->is_verified() ) {
+            return;
+        } else {
+            $code = $phone->get_verification_code();
+            $status = $this->send_message(
+                $number,
+                sprintf( "Here is your verification code: %s", $code )
+            );
+
+            echo $status;
+        }
     }
 }
