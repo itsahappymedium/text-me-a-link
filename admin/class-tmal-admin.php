@@ -10,9 +10,18 @@ class Admin {
      */
     private $options;
 
-    public function __construct() {
+    /**
+     * Settings inherited from the parent class
+     * @var array
+     */
+    private $settings;
+
+    public function __construct( $settings ) {
+        $this->settings = $settings;
+
         add_action( 'admin_menu', array( $this, 'add_plugin_menu' ) );
         add_action( 'admin_init', array( $this, 'page_init' ) );
+        add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
     }
 
     /**
@@ -46,6 +55,10 @@ class Admin {
             </form>
         </div>
         <?php
+    }
+
+    public function enqueue_scripts() {
+        wp_enqueue_style( 'tmal-admin', $this->settings['url'] . '/assets/css/tmal-admin.css', array(), $this->settings['version'] );
     }
 
     /**
@@ -116,7 +129,7 @@ class Admin {
      */
     public function account_sid_callback() {
         printf(
-            '<input type="text" id="account_sid" name="tmal-settings[account_sid]" value="%s" />',
+            '<input type="text" id="account_sid" name="tmal-settings[account_sid]" value="%s" class="tmal-key-input" />',
             isset( $this->options['account_sid'] ) ? esc_attr( $this->options['account_sid'] ) : ''
         );
     }
@@ -127,10 +140,8 @@ class Admin {
      */
     public function auth_key_callback() {
         printf(
-            '<input type="text" id="auth_key" name="tmal-settings[auth_key]" value="%s" />',
+            '<input type="text" id="auth_key" name="tmal-settings[auth_key]" value="%s" class="tmal-key-input" />',
             isset( $this->options['auth_key'] ) ? esc_attr( $this->options['auth_key'] ) : ''
         );
     }
 }
-
-new Admin();

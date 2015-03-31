@@ -38,6 +38,7 @@ class TMaL {
 
         if ( is_admin() ) {
             include( 'admin/class-tmal-admin.php' );
+            new Admin( $this->settings );
         }
     }
 }
