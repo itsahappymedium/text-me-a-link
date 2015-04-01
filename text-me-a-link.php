@@ -45,6 +45,22 @@ class TMaL {
     }
 
     /**
+     * Get options
+     * @return array Plugin options
+     */
+    public function get_options() {
+        return $this->options;
+    }
+
+    /**
+     * Get settings for the plugin
+     * @return array Settings
+     */
+    public function get_settings() {
+        return $this->settings;
+    }
+
+    /**
      * Load the necessary include files
      * @return void
      */
@@ -52,6 +68,11 @@ class TMaL {
         // Include various utility classes
         require_once 'includes/class-tmal-twilio.php';
         require_once 'includes/class-tmal-phone-number.php';
+        require_once 'includes/class-tmal-shortcodes.php';
+
+        // Load and init frontend
+        require_once 'includes/class-tmal-frontend.php';
+        new Frontend( $this->settings );
     }
 }
 

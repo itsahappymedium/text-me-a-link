@@ -50,6 +50,14 @@ class Phone_Number {
     }
 
     /**
+     * Get the phone number
+     * @return string Phone number
+     */
+    public function get_number() {
+        return $this->number;
+    }
+
+    /**
      * Determine if it's a valid phone number
      * @return boolean         Whether it's valid
      */
