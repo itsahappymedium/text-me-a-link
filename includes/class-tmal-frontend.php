@@ -43,11 +43,39 @@ class Frontend {
                 $twilio->send_verification_code( $phone->get_number() );
                 $response['data'] = 'verify';
             } else {
-                $twilio->send_message( $phone->get_number(), 'This is the page' );
+                // Prepare the message
+                $post_id = $_POST['post_id'];
+                $message = $this->get_current_page_message( $post_id );
+
+                // Send the message
+                $twilio->send_message( $phone->get_number(), $message ) ;
                 $response['data'] = 'sent';
+            }
+        } elseif ( isset($_POST['tmal-verification-code']) ) {
+            $code = $_POST['tmal-verification-code'];
+            $number = $_POST['tmal-verify-phone-number'];
+
+            $phone = new Phone_Number( $number );
+
+            if ( $phone->compare_verification_code( $code ) ) {
+                // Prepare the message
+                $twilio = new Twilio();
+                $twilio->init();
+                $post_id = $_POST['post_id'];
+                $message = $this->get_current_page_message( $post_id );
+
+                // Send the message
+                $twilio->send_message( $phone->get_number(), $message ) ;
+
+                $response['success'] = true;
+                $response['data'] = 'sent';
+            } else {
+                $response['success'] = true;
+                $response['data'] = 'verify-failed';
             }
         } else {
             $response['success'] = false;
+            $response['data'] = 'Nothing was sent.';
         }
 
         wp_send_json( $response );
@@ -82,5 +110,20 @@ class Frontend {
         );
 
         wp_enqueue_script( 'tmal-frontend' );
+    }
+
+    /**
+     * Get the current page message to send over text
+     * @param  string $post_id Post ID
+     * @return string          Text to send
+     */
+    public function get_current_page_message( $post_id ) {
+        return apply_filters( 'tmal_page_message',
+            sprintf(
+                "Your link to %s: %s",
+                get_bloginfo( 'name' ),
+                get_permalink( $post_id )
+            )
+        );
     }
 }

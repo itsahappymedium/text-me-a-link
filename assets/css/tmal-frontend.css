@@ -12,3 +12,24 @@
     margin-top: .25rem;
     font-size: .8em;
 }
+
+.tmal-field {
+    display: none;
+}
+
+    .tmal-field.active {
+        display: block;
+    }
+
+.tmal-message {
+    font-style: italic;
+    display: none;
+}
+
+    .tmal-message.active {
+        display: block;
+    }
+
+.tmal-submit {
+    display: none;
+}

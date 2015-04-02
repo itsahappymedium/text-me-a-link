@@ -75,7 +75,7 @@ class Twilio {
      * @param  string $message Message
      * @return string          The SID of the message
      */
-    private function send_message( $number, $message ) {
+    public function send_message( $number, $message ) {
         $message = $this->client->account->messages->sendMessage(
             $this->options['phone_number'],
             $number,
