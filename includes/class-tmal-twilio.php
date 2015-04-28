@@ -44,7 +44,7 @@ class Twilio {
      */
     private function _setup_twilio_client() {
         if ( ! $this->is_ready_to_send() ) {
-            throw new Exception("You must enter the proper credentials on the Text Me a Link settings page.");
+            throw new \Exception("You must enter the proper credentials on the Text Me a Link settings page.");
         }
 
         $client = new Services_Twilio( $this->options['account_sid'], $this->options['auth_key'] );

@@ -14,7 +14,7 @@ class Phone_Number {
         $this->number = $number;
 
         if ( ! $this->is_valid_number() ) {
-            throw new Exception("You passed an invalid phone number");
+            throw new \Exception("You passed an invalid phone number");
         }
     }
 
